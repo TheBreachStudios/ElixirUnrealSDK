@@ -14,13 +14,13 @@ USTRUCT()
 struct FElixirEventItem
 {
 	GENERATED_BODY()
-	
+
 	UPROPERTY()
 	FString Direction;
 	UPROPERTY()
 	FString Name;
 	UPROPERTY()
-	FString Payload;	
+	FString Payload;
 };
 
 /**
@@ -33,12 +33,15 @@ public:
 	SElixirEventSimulator();
 
 	/** Virtual destructor. */
-	virtual ~SElixirEventSimulator();
+	virtual ~SElixirEventSimulator() override;
 
 	/** Release all the resources */
 	void ReleaseResources();
 
-	SLATE_BEGIN_ARGS(SElixirEventSimulator){}
+	SLATE_BEGIN_ARGS(SElixirEventSimulator)
+		{
+		}
+
 	SLATE_END_ARGS()
 
 	/**
@@ -57,6 +60,10 @@ private:
 	void StartSimulating();
 	void StopSimulating();
 	bool SendCheckoutResult(bool Result, const FString& Sku);
+	bool SendGetWalletResult(const FString& Status, const FString& EthAddress, const FString& SolAddress,
+	                         const FString& EosAddress);
+	bool SendSignTypedDataResult(const FString& Status, const FString& Signature, const FString& R, const FString& S,
+	                             const FString& V);
 	bool SendOpenStateChange(bool IsOpen);
 
 private:
@@ -73,9 +80,29 @@ private:
 	TSharedPtr<SHorizontalBox> SkuHorizontalBox;
 	TSharedPtr<SEditableTextBox> SkuEditableTextBox;
 
+	TSharedPtr<SHorizontalBox> GetWalletStatusHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetWalletStatusEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetWalletEthAddressHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetWalletEthAddressEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetWalletSolAddressHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetWalletSolAddressEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetWalletEosAddressHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetWalletEosAddressEditableTextBox;
+
+	TSharedPtr<SHorizontalBox> SignTypedDataStatusHorizontalBox;
+	TSharedPtr<SEditableTextBox> SignTypedDataStatusEditableTextBox;
+	TSharedPtr<SHorizontalBox> SignTypedDataSignatureHorizontalBox;
+	TSharedPtr<SEditableTextBox> SignTypedDataSignatureEditableTextBox;
+	TSharedPtr<SHorizontalBox> SignTypedDataRHorizontalBox;
+	TSharedPtr<SEditableTextBox> SignTypedDataREditableTextBox;
+	TSharedPtr<SHorizontalBox> SignTypedDataSHorizontalBox;
+	TSharedPtr<SEditableTextBox> SignTypedDataSEditableTextBox;
+	TSharedPtr<SHorizontalBox> SignTypedDataVHorizontalBox;
+	TSharedPtr<SEditableTextBox> SignTypedDataVEditableTextBox;
+
 	TSharedPtr<SHorizontalBox> IsOpenHorizontalBox;
-	TSharedPtr<SCheckBox> IsOpenCheckBox;	
-	
+	TSharedPtr<SCheckBox> IsOpenCheckBox;
+
 	TSharedPtr<SListView<TSharedPtr<FElixirEventItem>>> EventsListView;
 	TArray<TSharedPtr<FElixirEventItem>> Events;
 };

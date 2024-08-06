@@ -191,6 +191,30 @@ bool UElixirSubsystem::Tick(float DeltaSeconds)
 				CheckoutResult.Broadcast(OMsg);
 			}
 			break;
+
+
+		case MTMKGetWalletResult:
+			{
+				FGetWalletResultOverlayMessage OMsg;
+				OMsg.Status = Msg.metaKeepGetWalletResult.status;
+				OMsg.EthAddress = Msg.metaKeepGetWalletResult.ethAddress;
+				OMsg.SolAddress = Msg.metaKeepGetWalletResult.solAddress;
+				OMsg.EosAddress = Msg.metaKeepGetWalletResult.eosAddress;
+				GetWalletResult.Broadcast(OMsg);
+			}
+			break;
+
+		case MTMKSignTypedDataResult:
+			{
+				FSignTypedDataResultOverlayMessage OMsg;
+				OMsg.Status = Msg.metaKeepSignTypedDataResult.status;
+				OMsg.Signature = Msg.metaKeepSignTypedDataResult.signature;
+				OMsg.R = Msg.metaKeepSignTypedDataResult.r;
+				OMsg.S = Msg.metaKeepSignTypedDataResult.s;
+				OMsg.V = Msg.metaKeepSignTypedDataResult.v;
+				SignTypedDataResult.Broadcast(OMsg);
+			}
+			break;
 		}
 	}
 #endif
@@ -500,6 +524,61 @@ bool UElixirSubsystem::Checkout(const FString& Sku)
 	}
 
 	UE_LOG(LogElixir, Log, TEXT("Checkout (\"Sku\": %s)"), *Sku);
+
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool UElixirSubsystem::GetWallet()
+{
+#if PLATFORM_DESKTOP
+	if (!EventBufferOverlayUi)
+	{
+		UE_LOG(LogElixir, Error, TEXT("Checkout failed: event buffer is not created"));
+		return false;
+	}
+
+	const size_t BytesWritten = WriteToEventBufferGetWallet(EventBufferOverlayUi);
+	if (BytesWritten == 0)
+	{
+		UE_LOG(LogElixir, Error, TEXT("GetWallet failed: 0 bytes written"));
+		return false;
+	}
+
+	UE_LOG(LogElixir, Log, TEXT("GetWallet"));
+
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool UElixirSubsystem::SignTypedData(const FString& Message, const FString& Reason)
+{
+#if PLATFORM_DESKTOP
+	if (!EventBufferOverlayUi)
+	{
+		UE_LOG(LogElixir, Error, TEXT("SignTypedData failed: event buffer is not created"));
+		return false;
+	}
+
+	if (Message.Len() == 0)
+	{
+		UE_LOG(LogElixir, Error, TEXT("SignTypedData failed: invalid empty Sku"));
+		return false;
+	}
+
+	const size_t BytesWritten = WriteToEventBufferSignTypedData(EventBufferOverlayUi, TCHAR_TO_ANSI(*Message),
+	                                                            TCHAR_TO_ANSI(*Reason));
+	if (BytesWritten == 0)
+	{
+		UE_LOG(LogElixir, Error, TEXT("SignTypedData failed: 0 bytes written"));
+		return false;
+	}
+
+	UE_LOG(LogElixir, Log, TEXT("SignTypedData (\"Message\": %s, \"Reason\": %s)"), *Message, *Reason);
 
 	return true;
 #else

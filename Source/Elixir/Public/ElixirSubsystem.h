@@ -40,6 +40,14 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCheckoutResultMessageDelegate, const FCheckoutResultOverlayMessage&,
 	                                            Message);
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGetWalletResultMessageDelegate,
+	                                            const FGetWalletResultOverlayMessage&,
+	                                            Message);
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSignTypedDataResultMessageDelegate,
+	                                            const FSignTypedDataResultOverlayMessage&,
+	                                            Message);
+
 public:
 	UElixirSubsystem();
 	static UElixirSubsystem* GetInstance();
@@ -86,6 +94,14 @@ public:
 	/** TODO: Add a comment */
 	UFUNCTION(BlueprintCallable, Category = "Elixir")
 	bool Checkout(const FString& Sku);
+
+	/** TODO: Add a comment */
+	UFUNCTION(BlueprintCallable, Category = "Elixir")
+	bool GetWallet();
+
+	/** TODO: Add a comment */
+	UFUNCTION(BlueprintCallable, Category = "Elixir")
+	bool SignTypedData(const FString& Message, const FString& Reason);
 
 	/** TODO: Add a comment */
 	void Refresh(TFunction<void(bool Result)> OnComplete);
@@ -136,6 +152,12 @@ public:
 	/** TODO: Add a comment */
 	UPROPERTY(BlueprintAssignable)
 	FOnCheckoutResultMessageDelegate CheckoutResult;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGetWalletResultMessageDelegate GetWalletResult;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnSignTypedDataResultMessageDelegate SignTypedDataResult;
 };
 
 UCLASS()
