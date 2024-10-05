@@ -28,7 +28,7 @@ public:
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTableView,
-	               TSharedPtr<FElixirEventItem> InItem)
+		TSharedPtr<FElixirEventItem> InItem)
 	{
 		ItemWeakPtr = InItem;
 		SMultiColumnTableRow::Construct(FSuperRowType::FArguments(), InOwnerTableView);
@@ -83,6 +83,8 @@ void SElixirEventSimulator::Construct(const FArguments& InArgs)
 	EventTypes.Add(MakeShareable(new FString("OpenStateChange")));
 	EventTypes.Add(MakeShareable(new FString("GetWalletResult")));
 	EventTypes.Add(MakeShareable(new FString("SignTypedDataResult")));
+	EventTypes.Add(MakeShareable(new FString("GetConsentResultEVM")));
+	EventTypes.Add(MakeShareable(new FString("GetConsentResultSolana")));
 	SelectedEventType = "CheckoutResult";
 
 	EventsListView = SNew(SListView<TSharedPtr<FElixirEventItem>>)
@@ -143,6 +145,24 @@ void SElixirEventSimulator::Construct(const FArguments& InArgs)
 					EVisibility::Collapsed);
 				SignTypedDataVHorizontalBox->SetVisibility(
 					EVisibility::Collapsed);
+
+				GetConsentEVMStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionHashHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentSolanaStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionSignatureHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
 			}
 			else if (SelectedEventType == "OpenStateChange")
 			{
@@ -171,6 +191,24 @@ void SElixirEventSimulator::Construct(const FArguments& InArgs)
 				SignTypedDataSHorizontalBox->SetVisibility(
 					EVisibility::Collapsed);
 				SignTypedDataVHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentEVMStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionHashHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentSolanaStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionSignatureHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionIdHorizontalBox->SetVisibility(
 					EVisibility::Collapsed);
 			}
 			else if (SelectedEventType == "GetWalletResult")
@@ -201,6 +239,24 @@ void SElixirEventSimulator::Construct(const FArguments& InArgs)
 					EVisibility::Collapsed);
 				SignTypedDataVHorizontalBox->SetVisibility(
 					EVisibility::Collapsed);
+
+				GetConsentEVMStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionHashHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentSolanaStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionSignatureHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
 			}
 			else if (SelectedEventType == "SignTypedDataResult")
 			{
@@ -229,6 +285,118 @@ void SElixirEventSimulator::Construct(const FArguments& InArgs)
 				SignTypedDataSHorizontalBox->SetVisibility(
 					EVisibility::Visible);
 				SignTypedDataVHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+
+				GetConsentEVMStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionHashHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentSolanaStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionSignatureHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+			}
+			else if (SelectedEventType == "GetConsentResultEVM")
+			{
+				SuccessHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SkuHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				IsOpenHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetWalletStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetWalletEthAddressHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetWalletSolAddressHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetWalletEosAddressHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				SignTypedDataStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataSignatureHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataRHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataSHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataVHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentEVMStatusHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+				GetConsentEVMTransactionHashHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+				GetConsentEVMTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+				GetConsentEVMTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+
+				GetConsentSolanaStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionSignatureHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentSolanaTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+			}
+			else if (SelectedEventType == "GetConsentResultSolana")
+			{
+				SuccessHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SkuHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				IsOpenHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetWalletStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetWalletEthAddressHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetWalletSolAddressHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetWalletEosAddressHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				SignTypedDataStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataSignatureHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataRHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataSHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				SignTypedDataVHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentEVMStatusHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionHashHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+				GetConsentEVMTransactionIdHorizontalBox->SetVisibility(
+					EVisibility::Collapsed);
+
+				GetConsentSolanaStatusHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+				GetConsentSolanaTransactionSignatureHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+				GetConsentSolanaTransactionChainScanUrlHorizontalBox->SetVisibility(
+					EVisibility::Visible);
+				GetConsentSolanaTransactionIdHorizontalBox->SetVisibility(
 					EVisibility::Visible);
 			}
 		})
@@ -398,6 +566,109 @@ void SElixirEventSimulator::Construct(const FArguments& InArgs)
 			SAssignNew(SignTypedDataVEditableTextBox, SEditableTextBox)
 		];
 
+	GetConsentEVMStatusHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("Status"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentEVMStatusEditableTextBox, SEditableTextBox)
+		];
+
+	GetConsentEVMTransactionChainScanUrlHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("TransactionChainScanUrl"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentEVMTransactionChainScanUrlEditableTextBox, SEditableTextBox)
+		];
+
+	GetConsentEVMTransactionHashHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("TransactionHash"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentEVMTransactionHashEditableTextBox, SEditableTextBox)
+		];
+
+	GetConsentEVMTransactionIdHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("TransactionId"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentEVMTransactionIdEditableTextBox, SEditableTextBox)
+		];
+
+	GetConsentSolanaStatusHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("Status"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentSolanaStatusEditableTextBox, SEditableTextBox)
+		];
+
+	GetConsentSolanaTransactionChainScanUrlHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("TransactionChainScanUrl"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentSolanaTransactionChainScanUrlEditableTextBox, SEditableTextBox)
+		];
+
+	GetConsentSolanaTransactionSignatureHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("TransactionSignature"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentSolanaTransactionSignatureEditableTextBox, SEditableTextBox)
+		];
+
+	GetConsentSolanaTransactionIdHorizontalBox = SNew(SHorizontalBox)
+		.Visibility(EVisibility::Collapsed)
+		+ SHorizontalBox::Slot()
+		.MaxWidth(100)
+		[
+			SNew(STextBlock).Text(FText::FromString("TransactionId"))
+		]
+		+ SHorizontalBox::Slot()
+		.FillWidth(1.0)
+		[
+			SAssignNew(GetConsentSolanaTransactionIdEditableTextBox, SEditableTextBox)
+		];
 	const TSharedPtr<SVerticalBox> VerticalBox = SNew(SVerticalBox)
 		+ SVerticalBox::Slot()
 		.AutoHeight()
@@ -533,6 +804,54 @@ void SElixirEventSimulator::Construct(const FArguments& InArgs)
 		]
 		+ SVerticalBox::Slot()
 		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentEVMStatusHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentEVMTransactionChainScanUrlHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentEVMTransactionHashHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentEVMTransactionIdHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentSolanaStatusHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentSolanaTransactionChainScanUrlHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentSolanaTransactionSignatureHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(0.0f, 3.0f, 0.0f, 3.0f)
+		[
+			GetConsentSolanaTransactionIdHorizontalBox.ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
 		.Padding(0, 10.0f, 0, 3.0f)
 		[
 			SNew(SButton)
@@ -581,6 +900,16 @@ void SElixirEventSimulator::Tick(const FGeometry& AllottedGeometry, const double
 		Item->Direction = "Incoming";
 		Item->Name = "Checkout";
 		Item->Payload = FString::Printf(TEXT("\"Sku\": \"%hs\""), Msg.checkout.sku);
+		Events.Add(Item);
+		EventsListView->RebuildList();
+	}
+
+	if (Msg.type == MTMKGetConsent)
+	{
+		const TSharedPtr<FElixirEventItem> Item = MakeShareable(new FElixirEventItem);
+		Item->Direction = "Incoming";
+		Item->Name = "GetConsent";
+		Item->Payload = FString::Printf(TEXT("\"ConsentToken\": \"%hs\""), Msg.metaKeepGetConsent.consentToken);
 		Events.Add(Item);
 		EventsListView->RebuildList();
 	}
@@ -636,17 +965,31 @@ FReply SElixirEventSimulator::OnSend()
 	else if (SelectedEventType == "GetWalletResult")
 	{
 		SendGetWalletResult(GetWalletStatusEditableTextBox->GetText().ToString(),
-		                    GetWalletEthAddressEditableTextBox->GetText().ToString(),
-		                    GetWalletSolAddressEditableTextBox->GetText().ToString(),
-		                    GetWalletEosAddressEditableTextBox->GetText().ToString());
+			GetWalletEthAddressEditableTextBox->GetText().ToString(),
+			GetWalletSolAddressEditableTextBox->GetText().ToString(),
+			GetWalletEosAddressEditableTextBox->GetText().ToString());
 	}
 	else if (SelectedEventType == "SignTypedDataResult")
 	{
 		SendSignTypedDataResult(SignTypedDataStatusEditableTextBox->GetText().ToString(),
-		                        SignTypedDataSignatureEditableTextBox->GetText().ToString(),
-		                        SignTypedDataREditableTextBox->GetText().ToString(),
-		                        SignTypedDataSEditableTextBox->GetText().ToString(),
-		                        SignTypedDataVEditableTextBox->GetText().ToString());
+			SignTypedDataSignatureEditableTextBox->GetText().ToString(),
+			SignTypedDataREditableTextBox->GetText().ToString(),
+			SignTypedDataSEditableTextBox->GetText().ToString(),
+			SignTypedDataVEditableTextBox->GetText().ToString());
+	}
+	else if (SelectedEventType == "GetConsentResultEVM")
+	{
+		SendGetConsentResultEVM(GetConsentEVMStatusEditableTextBox->GetText().ToString(),
+			GetConsentEVMTransactionChainScanUrlEditableTextBox->GetText().ToString(),
+			GetConsentEVMTransactionHashEditableTextBox->GetText().ToString(),
+			GetConsentEVMTransactionIdEditableTextBox->GetText().ToString());
+	}
+	else if (SelectedEventType == "GetConsentResultSolana")
+	{
+		SendGetConsentResultSolana(GetConsentSolanaStatusEditableTextBox->GetText().ToString(),
+			GetConsentSolanaTransactionChainScanUrlEditableTextBox->GetText().ToString(),
+			GetConsentSolanaTransactionSignatureEditableTextBox->GetText().ToString(),
+			GetConsentSolanaTransactionIdEditableTextBox->GetText().ToString());
 	}
 
 	return FReply::Handled();
@@ -720,8 +1063,8 @@ bool SElixirEventSimulator::SendCheckoutResult(bool Result, const FString& Sku)
 }
 
 bool SElixirEventSimulator::SendGetWalletResult(const FString& Status, const FString& EthAddress,
-                                                const FString& SolAddress,
-                                                const FString& EosAddress)
+	const FString& SolAddress,
+	const FString& EosAddress)
 {
 	if (Status.Len() == 0)
 	{
@@ -730,8 +1073,8 @@ bool SElixirEventSimulator::SendGetWalletResult(const FString& Status, const FSt
 	}
 
 	const size_t BytesWritten = WriteToEventBufferGetWalletResult(EventBufferGameSdk, TCHAR_TO_ANSI(*Status),
-	                                                              TCHAR_TO_ANSI(*EthAddress),TCHAR_TO_ANSI(*SolAddress),
-	                                                              TCHAR_TO_ANSI(*EosAddress));
+		TCHAR_TO_ANSI(*EthAddress),TCHAR_TO_ANSI(*SolAddress),
+		TCHAR_TO_ANSI(*EosAddress));
 	if (BytesWritten == 0)
 	{
 		return false;
@@ -750,7 +1093,7 @@ bool SElixirEventSimulator::SendGetWalletResult(const FString& Status, const FSt
 }
 
 bool SElixirEventSimulator::SendSignTypedDataResult(const FString& Status, const FString& Signature, const FString& R,
-                                                    const FString& S, const FString& V)
+	const FString& S, const FString& V)
 {
 	if (Status.Len() == 0)
 	{
@@ -759,8 +1102,8 @@ bool SElixirEventSimulator::SendSignTypedDataResult(const FString& Status, const
 	}
 
 	const size_t BytesWritten = WriteToEventBufferSignTypedDataResult(EventBufferGameSdk, TCHAR_TO_ANSI(*Status),
-	                                                                  TCHAR_TO_ANSI(*Signature),TCHAR_TO_ANSI(*R),
-	                                                                  TCHAR_TO_ANSI(*S), TCHAR_TO_ANSI(*V));
+		TCHAR_TO_ANSI(*Signature),TCHAR_TO_ANSI(*R),
+		TCHAR_TO_ANSI(*S), TCHAR_TO_ANSI(*V));
 	if (BytesWritten == 0)
 	{
 		return false;
@@ -772,6 +1115,74 @@ bool SElixirEventSimulator::SendSignTypedDataResult(const FString& Status, const
 	Item->Payload = FString::Printf(
 		TEXT("\"Status\": %s, \"Signature\": \"%s\", \"R\": \"%s\", \"S\": \"%s\", \"V\": \"%s\""), *Status,
 		*Signature, *R, *S, *V);
+	Events.Add(Item);
+	EventsListView->RebuildList();
+
+	return true;
+}
+
+bool SElixirEventSimulator::SendGetConsentResultEVM(const FString& Status, const FString& TransactionChainScanUrl,
+	const FString& TransactionHash,
+	const FString& TransactionId)
+{
+	if (Status.Len() == 0)
+	{
+		UE_LOG(LogEditorElixir, Error, TEXT("Invalid empty Status"));
+		return false;
+	}
+
+	const size_t BytesWritten = WriteToEventBufferGetConsentResult(EventBufferGameSdk, TCHAR_TO_ANSI(*Status),
+		MMKGetConsentResultResponseInterop{
+			MKResponseEVM,
+			TCHAR_TO_ANSI(*TransactionChainScanUrl),TCHAR_TO_ANSI(*TransactionHash),
+			TCHAR_TO_ANSI(*TransactionId)
+		});
+
+	if (BytesWritten == 0)
+	{
+		return false;
+	}
+
+	const TSharedPtr<FElixirEventItem> Item = MakeShareable(new FElixirEventItem);
+	Item->Direction = "Outgoing";
+	Item->Name = "SendGetConsentResultEVM";
+	Item->Payload = FString::Printf(
+		TEXT("\"Status\": %s, \"TransactionChainScanUrl\": \"%s\", \"TransactionHash\": \"%s\", \"TransactionId\": \"%s\""), *Status,
+		*TransactionChainScanUrl, *TransactionHash, *TransactionId);
+	Events.Add(Item);
+	EventsListView->RebuildList();
+
+	return true;
+}
+
+bool SElixirEventSimulator::SendGetConsentResultSolana(const FString& Status, const FString& TransactionChainScanUrl,
+	const FString& TransactionSignature,
+	const FString& TransactionId)
+{
+	if (Status.Len() == 0)
+	{
+		UE_LOG(LogEditorElixir, Error, TEXT("Invalid empty Status"));
+		return false;
+	}
+
+	const size_t BytesWritten = WriteToEventBufferGetConsentResult(EventBufferGameSdk, TCHAR_TO_ANSI(*Status),
+		MMKGetConsentResultResponseInterop{
+			MKResponseSolana,
+			TCHAR_TO_ANSI(*TransactionChainScanUrl),TCHAR_TO_ANSI(*TransactionSignature),
+			TCHAR_TO_ANSI(*TransactionId)
+		});
+
+	if (BytesWritten == 0)
+	{
+		return false;
+	}
+
+	const TSharedPtr<FElixirEventItem> Item = MakeShareable(new FElixirEventItem);
+	Item->Direction = "Outgoing";
+	Item->Name = "SendGetConsentResultEVM";
+	Item->Payload = FString::Printf(
+		TEXT("\"Status\": %s, \"TransactionChainScanUrl\": \"%s\", \"TransactionSignature\": \"%s\", \"TransactionId\": \"%s\""), *Status,
+		*TransactionChainScanUrl, *TransactionSignature, *TransactionId);
 	Events.Add(Item);
 	EventsListView->RebuildList();
 

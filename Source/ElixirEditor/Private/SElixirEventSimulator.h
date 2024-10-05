@@ -61,9 +61,13 @@ private:
 	void StopSimulating();
 	bool SendCheckoutResult(bool Result, const FString& Sku);
 	bool SendGetWalletResult(const FString& Status, const FString& EthAddress, const FString& SolAddress,
-	                         const FString& EosAddress);
+		const FString& EosAddress);
 	bool SendSignTypedDataResult(const FString& Status, const FString& Signature, const FString& R, const FString& S,
-	                             const FString& V);
+		const FString& V);
+	bool SendGetConsentResultEVM(const FString& Status, const FString& TransactionChainScanUrl, const FString& TransactionHash,
+		const FString& TransactionId);
+	bool SendGetConsentResultSolana(const FString& Status, const FString& TransactionChainScanUrl, const FString& TransactionSignature,
+		const FString& TransactionId);
 	bool SendOpenStateChange(bool IsOpen);
 
 private:
@@ -99,6 +103,25 @@ private:
 	TSharedPtr<SEditableTextBox> SignTypedDataSEditableTextBox;
 	TSharedPtr<SHorizontalBox> SignTypedDataVHorizontalBox;
 	TSharedPtr<SEditableTextBox> SignTypedDataVEditableTextBox;
+
+	TSharedPtr<SHorizontalBox> GetConsentEVMStatusHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentEVMStatusEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetConsentEVMTransactionHashHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentEVMTransactionHashEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetConsentEVMTransactionChainScanUrlHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentEVMTransactionChainScanUrlEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetConsentEVMTransactionIdHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentEVMTransactionIdEditableTextBox;
+
+	TSharedPtr<SHorizontalBox> GetConsentSolanaStatusHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentSolanaStatusEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetConsentSolanaTransactionSignatureHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentSolanaTransactionSignatureEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetConsentSolanaTransactionChainScanUrlHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentSolanaTransactionChainScanUrlEditableTextBox;
+	TSharedPtr<SHorizontalBox> GetConsentSolanaTransactionIdHorizontalBox;
+	TSharedPtr<SEditableTextBox> GetConsentSolanaTransactionIdEditableTextBox;
+
 
 	TSharedPtr<SHorizontalBox> IsOpenHorizontalBox;
 	TSharedPtr<SCheckBox> IsOpenCheckBox;
