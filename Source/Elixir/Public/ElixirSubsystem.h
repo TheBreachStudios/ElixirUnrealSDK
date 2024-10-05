@@ -12,7 +12,7 @@
 #if PLATFORM_DESKTOP
 namespace elixir::overlay::message
 {
-	class EventBufferInterop;
+class EventBufferInterop;
 }
 #endif
 
@@ -27,26 +27,34 @@ public:
 	DECLARE_DYNAMIC_DELEGATE_OneParam(FCallback, bool, bSuccess);
 
 	DECLARE_DYNAMIC_DELEGATE_TwoParams(FCollectionsCallback, bool, bSuccess, const TArray<FElixirCollection>&,
-	                                   Collections);
+		Collections);
 
 	DECLARE_DYNAMIC_DELEGATE_TwoParams(FTournamentsCallback, bool, bSuccess, const TArray<FElixirTournament>&,
-	                                   Collections);
+		Collections);
 
 	DECLARE_DYNAMIC_DELEGATE_TwoParams(FUserDataCallback, bool, bSuccess, FElixirUserData, UserData);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnOpenStateChangeMessageDelegate,
-	                                            const FOpenStateChangeOverlayMessage&, Message);
+		const FOpenStateChangeOverlayMessage&, Message);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCheckoutResultMessageDelegate, const FCheckoutResultOverlayMessage&,
-	                                            Message);
+		Message);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGetWalletResultMessageDelegate,
-	                                            const FGetWalletResultOverlayMessage&,
-	                                            Message);
+		const FGetWalletResultOverlayMessage&,
+		Message);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSignTypedDataResultMessageDelegate,
-	                                            const FSignTypedDataResultOverlayMessage&,
-	                                            Message);
+		const FSignTypedDataResultOverlayMessage&,
+		Message);
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGetConsentResultEVMMessageDelegate,
+		const FGetConsentResultEVMOverlayMessage&,
+		Message);
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGetConsentResultSolanaMessageDelegate,
+		const FGetConsentResultSolanaOverlayMessage&,
+		Message);
 
 public:
 	UElixirSubsystem();
@@ -103,6 +111,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Elixir")
 	bool SignTypedData(const FString& Message, const FString& Reason);
 
+	UFUNCTION(BlueprintCallable, Category = "Elixir")
+	bool GetConsent(const FString& ConsentToken);
+
 	/** TODO: Add a comment */
 	void Refresh(TFunction<void(bool Result)> OnComplete);
 
@@ -112,8 +123,8 @@ private:
 	bool Tick(float DeltaSeconds);
 	void RequestSession(const FCallback& OnComplete);
 	void MakeRequest(const FString& Uri, TSharedPtr<FJsonObject> Body,
-	                 TFunction<void(TSharedPtr<FJsonObject> JsonObject)> OnSuccess,
-	                 TFunction<void(int ErrorCode, FString Message)> OnError);
+		TFunction<void(TSharedPtr<FJsonObject> JsonObject)> OnSuccess,
+		TFunction<void(int ErrorCode, FString Message)> OnError);
 	void SaveRefreshToken();
 	void LoadRefreshToken();
 	void ClearRefreshToken();
@@ -158,6 +169,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnSignTypedDataResultMessageDelegate SignTypedDataResult;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGetConsentResultEVMMessageDelegate GetConsentResultEVM;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGetConsentResultSolanaMessageDelegate GetConsentResultSolana;
 };
 
 UCLASS()

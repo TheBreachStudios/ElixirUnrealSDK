@@ -175,3 +175,41 @@ struct FSignTypedDataResultOverlayMessage
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
 	FString V;
 };
+
+USTRUCT(BlueprintType, Category = "Elixir")
+struct FGetConsentResultEVMOverlayMessage
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString Status;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString TransactionChainScanUrl;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString TransactionHash;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString TransactionId;
+};
+
+USTRUCT(BlueprintType, Category = "Elixir")
+struct FGetConsentResultSolanaOverlayMessage
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString Status;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString TransactionId;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString TransactionSignature;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Basic)
+	FString TransactionChainScanUrl;
+};
+
+

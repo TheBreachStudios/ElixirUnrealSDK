@@ -26,6 +26,8 @@ extern "C" enum MessageType : int
     MTMKSignMessageResult = 55,
     MTMKSignTypedData = 56,
     MTMKSignTypedDataResult = 57,
+    MTMKGetConsent = 58,
+    MTMKGetConsentResult = 59,
 
     // Warning: Message types over 128 will be glitchy thanks to how msgpack converts integers. See TODO in ShmBuffer.cpp
 };
@@ -72,6 +74,11 @@ extern "C" struct RAVEN_EXPORT MMKSignTransactionInterop
     const char* reason;
 };
 
+extern "C" struct RAVEN_EXPORT MMKGetConsentInterop
+{
+    const char* consentToken;
+};
+
 extern "C" enum MMKResponseType : int
 {
     MKResponseNone = 0,
@@ -115,6 +122,36 @@ extern "C" struct RAVEN_EXPORT MMKSignTransactionResultInterop
 {
     const char*                             status;
     MMKSignTransactionResultResponseInterop response;
+};
+
+extern "C" struct RAVEN_EXPORT MMKGetConsentResultResponseEVMInterop
+{
+    const char* transactionChainScanUrl;
+    const char* transactionHash;
+    const char* transactionId;
+};
+
+extern "C" struct RAVEN_EXPORT MMKGetConsentResultResponseSolanaInterop
+{
+    const char* transactionId;
+    const char* transactionSignature;
+    const char* transactionChainScanUrl;
+};
+
+extern "C" struct RAVEN_EXPORT MMKGetConsentResultResponseInterop
+{
+    MMKResponseType type;
+    union
+    {
+        MMKGetConsentResultResponseEVMInterop    responseEVM;
+        MMKGetConsentResultResponseSolanaInterop responseSolana;
+    };
+};
+
+extern "C" struct RAVEN_EXPORT MMKGetConsentResultInterop
+{
+    const char*                        status;
+    MMKGetConsentResultResponseInterop response;
 };
 
 extern "C" struct RAVEN_EXPORT MMKSignMessageInterop
@@ -173,9 +210,22 @@ extern "C" struct RAVEN_EXPORT MMKSignTypedDataResultInterop
     const char* v;
 };
 
+// The following monstrosity disables the pesky 'extern-c-compat' warning that Unreal elevates to error
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextern-c-compat"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextern-c-compat"
+#endif
 extern "C" struct RAVEN_EXPORT MMKGetWalletInterop
 {
 };
+#ifdef __clang__
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
 extern "C" struct RAVEN_EXPORT MMKGetWalletResultInterop
 {
@@ -185,9 +235,22 @@ extern "C" struct RAVEN_EXPORT MMKGetWalletResultInterop
     const char* eosAddress;
 };
 
+// The following monstrosity disables the pesky 'extern-c-compat' warning that Unreal elevates to error
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextern-c-compat"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextern-c-compat"
+#endif
 extern "C" struct RAVEN_EXPORT MEmptyInterop
 {
 };
+#ifdef __clang__
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
 extern "C" struct RAVEN_EXPORT MessageInterop
 {
@@ -209,6 +272,8 @@ extern "C" struct RAVEN_EXPORT MessageInterop
         MMKSignTypedDataResultInterop   metaKeepSignTypedDataResult;
         MMKGetWalletInterop             metaKeepGetWallet;
         MMKGetWalletResultInterop       metaKeepGetWalletResult;
+        MMKGetConsentInterop            metaKeepGetConsent;
+        MMKGetConsentResultInterop      metaKeepGetConsentResult;
         MEmptyInterop                   empty;
     };
 };
@@ -253,6 +318,9 @@ extern "C" RAVEN_EXPORT bool WriteToEventBufferSignMessageResult(
 extern "C" RAVEN_EXPORT bool WriteToEventBufferSignTransaction(EventBufferInterop* eventBuffer, const char* message, const char* reason);
 extern "C" RAVEN_EXPORT bool WriteToEventBufferSignTransactionResult(
     EventBufferInterop* eventBuffer, const char* status, MMKSignTransactionResultResponseInterop response);
+extern "C" RAVEN_EXPORT bool WriteToEventBufferGetConsent(EventBufferInterop* eventBuffer, const char* consentToken);
+extern "C" RAVEN_EXPORT bool WriteToEventBufferGetConsentResult(
+    EventBufferInterop* eventBuffer, const char* status, MMKGetConsentResultResponseInterop response);
 extern "C" RAVEN_EXPORT const char* GetEventBufferOverlayUi();
 extern "C" RAVEN_EXPORT const char* GetEventBufferGameSdk();
 extern "C" RAVEN_EXPORT const char* GetShmBufferCefImage();
